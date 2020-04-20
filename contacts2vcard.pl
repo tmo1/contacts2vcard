@@ -23,7 +23,7 @@ use strict;
 # configuration and setup
 
 my %opts;
-getopts('a:d:', \%opts);
+getopts('a:d:v:', \%opts);
 $opts{'d'} //= "contacts2.db";
 $opts{'a'} //= "address_book.vcf";
 
@@ -40,7 +40,10 @@ my $data = $dbh->selectall_arrayref("SELECT * FROM data");
 
 foreach (@{$data}) {
 	if (exists $mimetypes{${$_}[2]}) {
-		unless (exists $vcards{${$_}[3]}) {$vcards{${$_}[3]} = vCard->new}
+		unless (exists $vcards{${$_}[3]}) {
+			$vcards{${$_}[3]} = vCard->new;
+			if ($opts{'v'}) {$vcards{${$_}[3]}->version($opts{'v'})}
+		}
 		&{$mimetypes{${$_}[2]}}($_);
 		#print "Row ${$_}[0] successfully processed.\n";
 	}
