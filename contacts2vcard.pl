@@ -28,9 +28,14 @@ $opts{'d'} //= "contacts2.db";
 $opts{'a'} //= "address_book.vcf";
 
 my %vcards;
-my %mimetypes = (1 => \&email_v2, 5 => \&phone_v2, 7 => \&name); # taken from the 'mimetypes' table in 'contacts2.db', explained here https://www.dev2qa.com/android-contacts-fields-data-table-columns-and-data-mimetype-explain/ 
+my %mimetypes = (1 => \&email_v2, 5 => \&phone_v2, 7 => \&name);
 my %email_v2_types = (1 => 'home', 2 => 'work', 3 => 'other', 4 => 'mobile');
-
+my %phone_v2_types = (1 => 'home', 2 => 'mobile', 3 => 'work', 4 => 'fax_work',
+						5 => 'fax_home', 6 => 'pager', 7 => 'other', 8 => 'callback',
+						9 => 'car', 10 => 'company_main', 11 => 'isdn', 12 => 'main',
+						13 => 'other_fax', 14 => 'radio', 15 => 'telex', 16 => 'tty_ttd',
+						17 => 'work_mobile', 18 => 'work_pager', 19 => 'assistant', 20 => 'mms');
+						
 # read database
 
 my $dbh = DBI->connect("dbi:SQLite:$opts{'d'}", undef, undef, {RaiseError => 1, PrintError => 0, AutoCommit => 0, sqlite_extended_result_codes => 1});
@@ -75,7 +80,7 @@ sub phone_v2 {
 	my $vcard = $vcards{@{$row}[3]};
 	my @previous_phones;
 	if (my $p = $vcard->phones) {@previous_phones = @{$p}}
-	$vcard->phones([@previous_phones, {type => [@{$row}[10]], number => @{$row}[9]}]);
+	$vcard->phones([@previous_phones, {type => [$phone_v2_types{@{$row}[10]}], number => @{$row}[9]}]);
 }
 
 sub name {

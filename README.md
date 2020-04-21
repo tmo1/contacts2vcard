@@ -12,9 +12,9 @@ The script depends on the Perl modules DBD::SQLite and vCard (Debian: libdbd-sql
 
 Invocation
 ----------
-The script is invoked as `contacts2vcard [-d database] [-a address_book] [-v vCard version]`, where 'database' is the database file (including path - the default is 'contacts2.db' in the current directory), 'address_book' is the name of a file (including path - the default is 'address_book' in the current directory) to output the vCard address book to, and 'vCard version' is the desired vCard version (the default is 4.0) The error `DBD::SQLite::db selectall_arrayref failed: no such table: data at perl/contacts2vcard.pl line 39.` indicates that the script has been pointed at an invalid file or (likely) a nonexistent one.
+The script is invoked as `contacts2vcard [-d database] [-a address_book] [-v vCard version]`, where 'database' is the database file (including path - the default is 'contacts2.db' in the current directory), 'address_book' is the name of a file (including path - the default is 'address_book' in the current directory) to output the vCard address book to, and 'vCard version' is the desired vCard version (the default is 4.0) The error `DBD::SQLite::db selectall_arrayref failed: no such table: data at perl/contacts2vcard.pl line nnn.` indicates that the script has been pointed at an invalid file or (likely) a nonexistent one.
 
-The Contacts app vCard importer on my Android phone (LineageoOS 17.1, based on Android 10) refuses to import version 4.0 vCards ("The format isn't supported"), but it accepts version 2.1.
+The Contacts app vCard importer on my Android phone (LineageOS 17.1, based on Android 10) refuses to import version 4.0 vCards ("The format isn't supported"), but it accepts version 2.1.
 
 Alternatives
 ------------
